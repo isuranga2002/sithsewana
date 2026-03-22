@@ -9,11 +9,11 @@
 
 /* ---------- CSS Custom Properties ---------- */
 :root {
-  /* Two-Tone Palette: White + Deep Forest Green */
-  --clr-primary: #1B3A2A;
-  --clr-primary-dark: #0F2318;
-  --clr-primary-light: #2D5A3F;
-  --clr-accent: #1B3A2A;
+  /* Two-Tone Palette: White + Black (matching logo colours) */
+  --clr-primary: #1a1a1a;
+  --clr-primary-dark: #000000;
+  --clr-primary-light: #333333;
+  --clr-accent: #1a1a1a;
   --clr-neutral-900: #111111;
   --clr-neutral-800: #1a1a1a;
   --clr-neutral-700: #333333;
@@ -193,11 +193,10 @@ section {
   animation: spin 0.8s linear infinite;
 }
 
-.preloader-text {
-  font-family: var(--ff-heading);
-  font-size: 1.3rem;
-  color: var(--clr-neutral-900);
-  letter-spacing: 2px;
+.preloader-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
 }
 
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -236,26 +235,32 @@ section {
   gap: 0.6rem;
 }
 
-.nav-logo-icon {
-  width: 40px;
-  height: 40px;
-  background: var(--clr-primary);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  color: var(--clr-white);
-  font-weight: 700;
-  font-family: var(--ff-heading);
-}
+/* Logo img styles moved below nav-logo-text */
 
 .nav-logo-text {
   font-family: var(--ff-heading);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
   transition: var(--transition);
+}
+
+.navbar.scrolled .nav-logo-text {
+  color: var(--clr-neutral-900);
+}
+
+.nav-logo-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: invert(1);
+  transition: var(--transition);
+}
+
+.navbar.scrolled .nav-logo-img {
+  width: 38px;
+  height: 38px;
+  filter: none;
 }
 
 .nav-links {
@@ -267,10 +272,18 @@ section {
 .nav-links a {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--clr-neutral-600);
+  color: rgba(255,255,255,0.75);
   position: relative;
   padding-bottom: 2px;
   letter-spacing: 0.3px;
+}
+
+.navbar.scrolled .nav-links a {
+  color: var(--clr-neutral-600);
+}
+
+.navbar.scrolled .nav-links a:hover {
+  color: var(--clr-neutral-900);
 }
 
 .nav-links a::after {
@@ -280,12 +293,16 @@ section {
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--clr-primary);
+  background: var(--clr-white);
   transition: var(--transition);
 }
 
+.navbar.scrolled .nav-links a::after {
+  background: var(--clr-neutral-900);
+}
+
 .nav-links a:hover {
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
 }
 
 .nav-links a:hover::after {
@@ -293,13 +310,18 @@ section {
 }
 
 .nav-donate-btn {
-  background: var(--clr-primary);
-  color: var(--clr-white) !important;
+  background: var(--clr-white);
+  color: var(--clr-neutral-900) !important;
   padding: 0.55rem 1.5rem;
   border-radius: 50px;
   font-weight: 600;
   font-size: 0.85rem;
   transition: var(--transition);
+}
+
+.navbar.scrolled .nav-donate-btn {
+  background: var(--clr-neutral-900);
+  color: var(--clr-white) !important;
 }
 
 .nav-donate-btn::after { display: none !important; }
@@ -322,9 +344,13 @@ section {
 .hamburger span {
   width: 22px;
   height: 1.5px;
-  background: var(--clr-neutral-800);
+  background: var(--clr-white);
   border-radius: 2px;
   transition: var(--transition);
+}
+
+.navbar.scrolled .hamburger span {
+  background: var(--clr-neutral-800);
 }
 
 .hamburger.active span:nth-child(1) {
@@ -338,7 +364,7 @@ section {
 }
 
 /* ============================================
-   HERO
+   HERO SLIDER
    ============================================ */
 .hero {
   min-height: 100vh;
@@ -346,26 +372,88 @@ section {
   align-items: center;
   position: relative;
   overflow: hidden;
-  background: var(--clr-white);
+  background: var(--clr-neutral-900);
   padding-top: 100px;
   padding-bottom: var(--space-3xl);
+}
+
+.hero-slider {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+  transform: scale(1.05);
+  animation: heroZoom 12s ease-in-out infinite alternate;
+}
+
+.hero-slide.active {
+  opacity: 1;
+}
+
+@keyframes heroZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.08); }
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.45) 100%);
+  z-index: 1;
+}
+
+.hero-dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.hero-dot.active,
+.hero-dot:hover {
+  background: var(--clr-white);
+  transform: scale(1.2);
 }
 
 .hero-content {
   position: relative;
   z-index: 3;
-  max-width: 680px;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--clr-bg-alt);
-  border: 1px solid var(--clr-neutral-200);
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50px;
   padding: 0.4rem 1.2rem;
-  color: var(--clr-primary);
+  color: rgba(255,255,255,0.85);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 2px;
@@ -376,7 +464,7 @@ section {
 .hero-badge-dot {
   width: 6px;
   height: 6px;
-  background: var(--clr-primary);
+  background: var(--clr-white);
   border-radius: var(--radius-full);
   animation: pulse-dot 2s ease-in-out infinite;
 }
@@ -390,7 +478,7 @@ section {
   font-family: var(--ff-heading);
   font-size: var(--fs-hero);
   font-weight: 700;
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
   line-height: 1.08;
   margin-bottom: var(--space-md);
   letter-spacing: -0.02em;
@@ -398,20 +486,23 @@ section {
 
 .hero h1 em {
   font-style: italic;
-  color: var(--clr-primary);
+  color: rgba(255,255,255,0.7);
 }
 
 .hero-text {
   font-size: clamp(1rem, 1.5vw, 1.15rem);
-  color: var(--clr-neutral-600);
+  color: rgba(255,255,255,0.75);
   line-height: 1.85;
   margin-bottom: var(--space-lg);
-  max-width: 520px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-btns {
   display: flex;
   gap: 1rem;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -428,25 +519,37 @@ section {
 }
 
 .btn-primary {
-  background: var(--clr-primary);
-  color: var(--clr-white);
+  background: var(--clr-white);
+  color: var(--clr-neutral-900);
 }
 
 .btn-primary:hover {
-  background: var(--clr-primary-dark);
+  background: var(--clr-neutral-100);
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--clr-neutral-900);
-  border: 1.5px solid var(--clr-neutral-200);
+  color: var(--clr-white);
+  border: 1.5px solid rgba(255,255,255,0.3);
 }
 
 .btn-outline:hover {
-  border-color: var(--clr-neutral-900);
+  border-color: var(--clr-white);
+  background: rgba(255,255,255,0.1);
   transform: translateY(-2px);
+}
+
+.btn-dark {
+  background: var(--clr-neutral-900);
+  color: var(--clr-white);
+}
+
+.btn-dark:hover {
+  background: var(--clr-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
 }
 
 .btn-outline-dark {
@@ -476,20 +579,21 @@ section {
   gap: 3rem;
   margin-top: var(--space-xl);
   padding-top: var(--space-lg);
-  border-top: 1px solid var(--clr-neutral-100);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  justify-content: center;
 }
 
 .hero-stat h3 {
   font-family: var(--ff-heading);
   font-size: 2.2rem;
   font-weight: 700;
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
   line-height: 1;
 }
 
 .hero-stat p {
   font-size: 0.8rem;
-  color: var(--clr-neutral-500);
+  color: rgba(255,255,255,0.55);
   margin-top: 0.4rem;
   letter-spacing: 0.3px;
 }
@@ -869,10 +973,26 @@ section {
    DONATE
    ============================================ */
 #donate {
-  background: var(--clr-bg-alt);
-  color: var(--clr-neutral-800);
+  background: var(--clr-neutral-900);
+  color: var(--clr-white);
   position: relative;
   overflow: hidden;
+}
+
+#donate .section-label {
+  color: rgba(255,255,255,0.5);
+}
+
+#donate .section-label::before {
+  background: rgba(255,255,255,0.3);
+}
+
+#donate .section-title {
+  color: var(--clr-white);
+}
+
+#donate .section-subtitle {
+  color: rgba(255,255,255,0.65);
 }
 
 .donate-content {
@@ -884,7 +1004,7 @@ section {
   font-family: var(--ff-heading);
   font-size: 1.3rem;
   margin-bottom: 1rem;
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
 }
 
 .donate-grid {
@@ -903,8 +1023,8 @@ section {
 }
 
 .donate-amount {
-  background: var(--clr-white);
-  border: 1px solid var(--clr-neutral-200);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: var(--radius-sm);
   padding: 1rem;
   text-align: center;
@@ -913,26 +1033,26 @@ section {
 }
 
 .donate-amount:hover {
-  border-color: var(--clr-primary);
-  box-shadow: var(--shadow-sm);
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.1);
 }
 
 .donate-amount .amount {
   font-family: var(--ff-heading);
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
 }
 
 .donate-amount .desc {
   font-size: 0.75rem;
-  color: var(--clr-neutral-500);
+  color: rgba(255,255,255,0.5);
   margin-top: 0.25rem;
 }
 
 .bank-details {
-  background: var(--clr-white);
-  border: 1px solid var(--clr-neutral-200);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
 }
@@ -940,7 +1060,7 @@ section {
 .bank-details h3 {
   font-family: var(--ff-heading);
   font-size: var(--fs-h3);
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
   margin-bottom: var(--space-sm);
 }
 
@@ -948,7 +1068,7 @@ section {
   display: flex;
   justify-content: space-between;
   padding: 0.7rem 0;
-  border-bottom: 1px solid var(--clr-neutral-100);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   font-size: var(--fs-small);
 }
 
@@ -960,15 +1080,15 @@ section {
   border-bottom: none !important;
   padding-top: 1rem;
   margin-top: 0.5rem;
-  border-top: 1px solid var(--clr-neutral-100);
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .bank-row .label {
-  color: var(--clr-neutral-500);
+  color: rgba(255,255,255,0.5);
 }
 
 .bank-row .value {
-  color: var(--clr-neutral-900);
+  color: var(--clr-white);
   font-weight: 600;
 }
 
@@ -978,16 +1098,18 @@ section {
 }
 
 .bank-row .value a {
-  color: var(--clr-primary);
+  color: rgba(255,255,255,0.85);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 .bank-row .value a:hover {
-  color: var(--clr-primary-light);
+  color: var(--clr-white);
 }
 
 .donate-note {
   font-size: var(--fs-small);
-  color: var(--clr-neutral-500);
+  color: rgba(255,255,255,0.45);
   margin-top: var(--space-sm);
   line-height: 1.7;
 }
@@ -1193,6 +1315,12 @@ section {
   color: var(--clr-white) !important;
 }
 
+.footer-logo-img {
+  filter: invert(1);
+  width: 40px;
+  height: 40px;
+}
+
 .footer-brand p {
   font-size: var(--fs-small);
   line-height: 1.8;
@@ -1253,6 +1381,151 @@ section {
   padding-top: var(--space-md);
   font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
+}
+
+/* ============================================
+   SECTION BACKGROUNDS & ANIMATIONS
+   ============================================ */
+.section-with-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+.section-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.92);
+  z-index: 1;
+}
+
+.section-bg-overlay-dark {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 1;
+}
+
+/* Dark Background Section Text */
+.section-label-light {
+  color: rgba(255,255,255,0.55) !important;
+}
+
+.section-label-light::before {
+  background: rgba(255,255,255,0.3) !important;
+}
+
+.section-title-light {
+  color: var(--clr-white) !important;
+}
+
+.section-subtitle-light {
+  color: rgba(255,255,255,0.65) !important;
+}
+
+/* Glass Impact Cards */
+.impact-card-glass {
+  background: rgba(255,255,255,0.08) !important;
+  border: 1px solid rgba(255,255,255,0.15) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.impact-card-glass:hover {
+  background: rgba(255,255,255,0.14) !important;
+  border-color: rgba(255,255,255,0.25) !important;
+}
+
+.impact-number-light {
+  color: var(--clr-white) !important;
+}
+
+.impact-number-light .suffix {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+.impact-label-light {
+  color: rgba(255,255,255,0.6) !important;
+}
+
+/* ============================================
+   WHATSAPP FLOATING BUTTON
+   ============================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 999;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+  transition: var(--transition);
+  animation: floatBounce 3s ease-in-out infinite;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 6px 25px rgba(37, 211, 102, 0.5);
+}
+
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ============================================
+   ENHANCED ANIMATIONS
+   ============================================ */
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-left.visible,
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal-scale.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Parallax subtle float for cards */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.service-card:hover {
+  animation: subtleFloat 2s ease-in-out infinite;
 }
 
 /* ============================================

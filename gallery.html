@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Sith Sewana | Life at Our Home</title>
+  <meta name="description" content="Browse photos from Sith Sewana — celebrations, activities, temple visits, sports achievements, and everyday life at our home for differently-abled children in Tanamalwilla, Sri Lanka.">
+  <meta name="keywords" content="Sith Sewana gallery, photos, differently-abled children, Tanamalwilla, Sri Lanka, celebrations, activities">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Gallery — Sith Sewana">
+  <meta property="og:description" content="Photos from life at Sith Sewana — celebrations, activities, and everyday moments.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sithsewana.com/gallery.html">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/logo.png">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Page-specific styles -->
+  <style>
+    /* ---- Gallery Page Hero ---- */
+    .gallery-hero {
+      position: relative;
+      min-height: 340px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: var(--clr-neutral-900);
+      overflow: hidden;
+      padding: 120px 0 60px;
+    }
+
+    .gallery-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/hero-bg.webp') center/cover no-repeat;
+      opacity: 0.3;
+    }
+
+    .gallery-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    .gallery-hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .gallery-hero h1 {
+      font-family: var(--ff-heading);
+      font-size: var(--fs-h1);
+      font-weight: 700;
+      color: var(--clr-white);
+      margin-bottom: var(--space-xs);
+      letter-spacing: -0.02em;
+    }
+
+    .gallery-hero p {
+      color: rgba(255,255,255,0.7);
+      font-size: var(--fs-body);
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .gallery-hero .breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: var(--space-md);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .gallery-hero .breadcrumb a {
+      color: rgba(255,255,255,0.65);
+      transition: var(--transition);
+    }
+
+    .gallery-hero .breadcrumb a:hover {
+      color: var(--clr-white);
+    }
+
+    .gallery-hero .breadcrumb svg {
+      width: 14px;
+      height: 14px;
+      opacity: 0.5;
+    }
+
+    /* ---- Masonry Grid ---- */
+    .gallery-page-section {
+      padding: var(--space-3xl) 0;
+      background: var(--clr-bg-alt);
+    }
+
+    .masonry-grid {
+      columns: 4;
+      column-gap: var(--space-sm);
+    }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: var(--space-sm);
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--clr-neutral-100);
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .masonry-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      display: flex;
+      align-items: flex-end;
+      padding: 1.2rem;
+    }
+
+    .masonry-item:hover .masonry-item-overlay {
+      opacity: 1;
+    }
+
+    .masonry-item-overlay span {
+      color: var(--clr-white);
+      font-size: var(--fs-small);
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    /* ---- Back to Home ---- */
+    .back-home {
+      text-align: center;
+      margin-top: var(--space-xl);
+    }
+
+    .back-home a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--clr-neutral-600);
+      transition: var(--transition);
+    }
+
+    .back-home a:hover {
+      color: var(--clr-neutral-900);
+    }
+
+    .back-home a svg {
+      transition: transform var(--transition);
+    }
+
+    .back-home a:hover svg {
+      transform: translateX(-3px);
+    }
+
+    /* ---- Responsive Masonry ---- */
+    @media (max-width: 1024px) {
+      .masonry-grid {
+        columns: 3;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .masonry-grid {
+        columns: 2;
+      }
+
+      .gallery-hero {
+        min-height: 280px;
+        padding: 100px 0 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .masonry-grid {
+        columns: 1;
+      }
+
+      .gallery-hero {
+        min-height: 240px;
+        padding: 100px 0 32px;
+      }
+
+      .gallery-hero h1 {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+      }
+
+      .filter-btn {
+        padding: 0.45rem 1.1rem;
+        font-size: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ============ PRELOADER ============ -->
+<div id="preloader">
+  <img src="images/logo.png" alt="Sith Sewana" class="preloader-logo">
+  <div class="preloader-spinner"></div>
+</div>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar scrolled" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="images/logo.png" alt="Sith Sewana Logo" class="nav-logo-img">
+      <span class="nav-logo-text">Sith Sewana</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#mission">Mission</a></li>
+      <li><a href="index.html#services">Programs</a></li>
+      <li><a href="index.html#impact">Impact</a></li>
+      <li><a href="index.html#gallery">Gallery</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="index.html#donate" class="nav-donate-btn">Donate Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ GALLERY HERO ============ -->
+<section class="gallery-hero">
+  <div class="gallery-hero-bg"></div>
+  <div class="gallery-hero-overlay"></div>
+  <div class="gallery-hero-content">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span>Gallery</span>
+    </div>
+    <h1>Our Gallery</h1>
+    <p>Moments of joy, growth, and togetherness captured at Sith Sewana. Every photo tells a story of hope.</p>
+  </div>
+</section>
+
+<!-- ============ GALLERY GRID ============ -->
+<section class="gallery-page-section">
+  <div class="container">
+
+    <!-- Masonry Grid -->
+    <div class="masonry-grid" id="masonry-grid">
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-temple-group.webp" alt="Children visiting Buddhist temple" loading="lazy">
+        <div class="masonry-item-overlay"><span>Temple Visit</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-christmas.webp" alt="Christmas celebration at Sith Sewana" loading="lazy">
+        <div class="masonry-item-overlay"><span>Christmas Celebration</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-medical.webp" alt="Medical clinic for children" loading="lazy">
+        <div class="masonry-item-overlay"><span>Medical Clinics</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-boat-trip.webp" alt="Children on a boat trip excursion" loading="lazy">
+        <div class="masonry-item-overlay"><span>Boat Trip</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-vesak.webp" alt="Vesak lantern celebration" loading="lazy">
+        <div class="masonry-item-overlay"><span>Vesak Celebration</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-worship.webp" alt="Buddhist worship and spiritual activities" loading="lazy">
+        <div class="masonry-item-overlay"><span>Spiritual Growth</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-newyear.webp" alt="Sinhala New Year celebrations" loading="lazy">
+        <div class="masonry-item-overlay"><span>New Year Celebrations</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-sports.webp" alt="Child with sports achievement medal" loading="lazy">
+        <div class="masonry-item-overlay"><span>Sports Achievements</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-daily-life.webp" alt="Children enjoying daily activities" loading="lazy">
+        <div class="masonry-item-overlay"><span>Daily Life</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-dancing.webp" alt="Children dancing at cultural event" loading="lazy">
+        <div class="masonry-item-overlay"><span>Cultural Events</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-beach.webp" alt="Beach outing with wheelchair access" loading="lazy">
+        <div class="masonry-item-overlay"><span>Beach Outing</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-gardening.webp" alt="Children gardening and planting" loading="lazy">
+        <div class="masonry-item-overlay"><span>Gardening Activities</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-temple-prayer.webp" alt="Children in temple prayer" loading="lazy">
+        <div class="masonry-item-overlay"><span>Temple Prayer</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-newyear-group.webp" alt="New Year group celebration" loading="lazy">
+        <div class="masonry-item-overlay"><span>New Year Group</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/gallery-birthday.webp" alt="Birthday celebration" loading="lazy">
+        <div class="masonry-item-overlay"><span>Birthday Celebration</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/about-entrance.webp" alt="Sith Sewana residential home entrance" loading="lazy">
+        <div class="masonry-item-overlay"><span>Our Home</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/hero-bg.webp" alt="Community gathering at Sith Sewana" loading="lazy">
+        <div class="masonry-item-overlay"><span>Community Gathering</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/hero-slide-2.webp" alt="Vesak lanterns celebration" loading="lazy">
+        <div class="masonry-item-overlay"><span>Vesak Lanterns</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/hero-slide-3.webp" alt="Children having fun on boat trip" loading="lazy">
+        <div class="masonry-item-overlay"><span>Boat Trip Fun</span></div>
+      </div>
+
+      <div class="masonry-item gallery-item">
+        <img src="images/hero-slide-4.webp" alt="Children at temple meditation" loading="lazy">
+        <div class="masonry-item-overlay"><span>Temple Meditation</span></div>
+      </div>
+
+    </div>
+
+    <!-- Back to Home -->
+    <div class="back-home">
+      <a href="index.html">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to Home
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo footer-logo-link">
+          <img src="images/logo.png" alt="Sith Sewana Logo" class="nav-logo-img footer-logo-img">
+          <span class="nav-logo-text footer-logo-text">Sith Sewana</span>
+        </a>
+        <p>
+          A residential home for mentally handicapped and differently-abled children
+          in Tanamalwilla, Sri Lanka. Empowering children with special needs since 1999.
+        </p>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/sithsewana" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/sithsewana" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://wa.me/94777607382" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </a>
+          <a href="mailto:sithsewana@gmail.com" aria-label="Email">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <div class="footer-links">
+          <a href="index.html#about">About Us</a>
+          <a href="index.html#mission">Our Mission</a>
+          <a href="index.html#services">Programs</a>
+          <a href="index.html#impact">Impact</a>
+          <a href="gallery.html">Gallery</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Get Involved</h4>
+        <div class="footer-links">
+          <a href="index.html#donate">Donate Money</a>
+          <a href="index.html#help">Donate Items</a>
+          <a href="index.html#contact">Visit Us</a>
+          <a href="https://wa.me/94777607382" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Contact</h4>
+        <div class="footer-links">
+          <a href="mailto:sithsewana@gmail.com">sithsewana@gmail.com</a>
+          <a href="tel:+94777607382">+94 777 607 382</a>
+          <a href="https://wa.me/94777607382" target="_blank" rel="noopener">WhatsApp Us</a>
+          <a>Tanamalwilla, Sri Lanka</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Sith Sewana MHCDS. All rights reserved.</span>
+      <span>
+        Approved Charity — Inland Revenue Act No. 10 of 2006
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/94777607382" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- Scripts -->
+<script src="scripts.js"></script>
+
+<!-- Gallery Page Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Force navbar scrolled class (no hero slider on this page)
+  const navbar = document.getElementById('navbar');
+  if (navbar) {
+    navbar.classList.add('scrolled');
+    window.addEventListener('scroll', () => {
+      navbar.classList.add('scrolled');
+    }, { passive: true });
+  }
+});
+</script>
+
+</body>
+</html>

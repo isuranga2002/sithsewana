@@ -46,8 +46,44 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    /* ---------- Hero Image Slider ---------- */
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    const goToSlide = (index) => {
+        heroSlides.forEach(s => s.classList.remove('active'));
+        heroDots.forEach(d => d.classList.remove('active'));
+        currentSlide = index;
+        if (heroSlides[currentSlide]) heroSlides[currentSlide].classList.add('active');
+        if (heroDots[currentSlide]) heroDots[currentSlide].classList.add('active');
+    };
+
+    const nextSlide = () => {
+        goToSlide((currentSlide + 1) % heroSlides.length);
+    };
+
+    // Auto-advance every 5 seconds
+    const startSlider = () => {
+        slideInterval = setInterval(nextSlide, 5000);
+    };
+
+    // Manual dot click
+    heroDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            clearInterval(slideInterval);
+            goToSlide(parseInt(dot.dataset.slide, 10));
+            startSlider();
+        });
+    });
+
+    if (heroSlides.length > 1) {
+        startSlider();
+    }
+
     /* ---------- Scroll Reveal ---------- */
-    const revealElements = document.querySelectorAll('.reveal');
+    const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
 
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -97,6 +133,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Also animate hero stats on page load
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    heroObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        heroObserver.observe(heroSection);
+    }
+
     const impactSection = document.getElementById('impact');
     if (impactSection) {
         const impactObserver = new IntersectionObserver((entries) => {
@@ -110,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         impactObserver.observe(impactSection);
     }
-
-    /* ---------- Hero Particles (removed — clean design) ---------- */
 
     /* ---------- Lightbox ---------- */
     const lightbox = document.getElementById('lightbox');
@@ -152,8 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Smooth Scroll for Anchor Links ---------- */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', (e) => {
+            const href = anchor.getAttribute('href');
+            if (href === '#') return;
             e.preventDefault();
-            const target = document.querySelector(anchor.getAttribute('href'));
+            const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth' });
             }
@@ -181,5 +231,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.addEventListener('scroll', highlightNav, { passive: true });
+
+    /* ---------- Parallax Background Effect ---------- */
+    const parallaxBgs = document.querySelectorAll('.section-bg-image');
+    if (parallaxBgs.length > 0) {
+        window.addEventListener('scroll', () => {
+            parallaxBgs.forEach(bg => {
+                const section = bg.parentElement;
+                const rect = section.getBoundingClientRect();
+                const speed = 0.3;
+                bg.style.transform = `translateY(${rect.top * speed}px)`;
+            });
+        }, { passive: true });
+    }
 
 });
