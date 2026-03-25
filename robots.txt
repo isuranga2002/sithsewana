@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://www.sithsewana.marmorealgroup.com/sitemap.xml
+Sitemap: https://isuranga2002.github.io/sithsewana/sitemap.xml

@@ -24,25 +24,49 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ---------- Mobile Menu ---------- */
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    let scrollPos = 0;
+    const openMenu = () => {
+        scrollPos = window.scrollY;
+        hamburger.classList.add('active');
+        navLinks.classList.add('open');
+        if (navOverlay) navOverlay.classList.add('active');
+        document.body.classList.add('menu-open');
+        document.body.style.top = `-${scrollPos}px`;
+    };
+
+    const closeMenu = () => {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+        if (navOverlay) navOverlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        document.body.style.top = '';
+        window.scrollTo(0, scrollPos);
+    };
 
     hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navLinks.classList.toggle('open');
+        if (navLinks.classList.contains('open')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
     // Close menu on link click
     navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('open');
-        });
+        link.addEventListener('click', closeMenu);
     });
+
+    // Close menu on overlay click
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMenu);
+    }
 
     // Close menu on outside click
     document.addEventListener('click', (e) => {
         if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
-            hamburger.classList.remove('active');
-            navLinks.classList.remove('open');
+            closeMenu();
         }
     });
 
