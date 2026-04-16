@@ -11,17 +11,20 @@
   <meta name="theme-color" content="#111111">
   <meta name="format-detection" content="telephone=no">
 
+  <!-- Performance: Preload critical hero image -->
+  <link rel="preload" as="image" href="images/hero-bg.webp" fetchpriority="high">
+
   <!-- Canonical & Hreflang -->
-  <link rel="canonical" href="https://isuranga2002.github.io/sithsewana/">
-  <link rel="alternate" hreflang="en" href="https://isuranga2002.github.io/sithsewana/">
-  <link rel="alternate" hreflang="x-default" href="https://isuranga2002.github.io/sithsewana/">
+  <link rel="canonical" href="https://sithsewana.com/">
+  <link rel="alternate" hreflang="en" href="https://sithsewana.com/">
+  <link rel="alternate" hreflang="x-default" href="https://sithsewana.com/">
 
   <!-- Open Graph -->
   <meta property="og:title" content="Sith Sewana — Home for Differently-Abled Children | Tanamalwilla, Sri Lanka">
   <meta property="og:description" content="Sith Sewana is a residential home for 70+ mentally handicapped and differently-abled children in Tanamalwilla, Sri Lanka. Founded in 1999. Donate, volunteer, or spread the word.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://isuranga2002.github.io/sithsewana/">
-  <meta property="og:image" content="https://isuranga2002.github.io/sithsewana/images/hero-bg.webp">
+  <meta property="og:url" content="https://sithsewana.com/">
+  <meta property="og:image" content="https://sithsewana.com/images/hero-bg.webp">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="Children at Sith Sewana residential home in Tanamalwilla, Sri Lanka">
@@ -32,7 +35,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Sith Sewana — Home for Differently-Abled Children">
   <meta name="twitter:description" content="Empowering 70+ differently-abled children in Sri Lanka since 1999. Residential care, therapy, and vocational training.">
-  <meta name="twitter:image" content="https://isuranga2002.github.io/sithsewana/images/hero-bg.webp">
+  <meta name="twitter:image" content="https://sithsewana.com/images/hero-bg.webp">
   <meta name="twitter:image:alt" content="Children at Sith Sewana residential home">
 
   <!-- Geo Meta Tags (Local SEO) -->
@@ -57,9 +60,9 @@
     "@type": "NGO",
     "name": "Sith Sewana Mentally Handicapped Children's Development Society",
     "alternateName": ["Sith Sewana MHCDS", "Sith Sewana", "Sith Sevana"],
-    "url": "https://isuranga2002.github.io/sithsewana/",
-    "logo": "https://isuranga2002.github.io/sithsewana/images/logo.png",
-    "image": "https://isuranga2002.github.io/sithsewana/images/hero-bg.webp",
+    "url": "https://sithsewana.com/",
+    "logo": "https://sithsewana.com/images/logo.png",
+    "image": "https://sithsewana.com/images/hero-bg.webp",
     "description": "Sith Sewana is a registered residential home providing care, therapy, education, and vocational training for 70+ mentally handicapped and differently-abled children in Tanamalwilla, Sri Lanka since 1999.",
     "foundingDate": "1999-05-08",
     "founder": {
@@ -105,7 +108,7 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Sith Sewana",
-    "url": "https://isuranga2002.github.io/sithsewana/"
+    "url": "https://sithsewana.com/"
   }
   </script>
 
@@ -119,7 +122,75 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://isuranga2002.github.io/sithsewana/"
+        "item": "https://sithsewana.com/"
+      }
+    ]
+  }
+  </script>
+
+  <!-- Structured Data: WebSite with SearchAction (Sitelinks Search Box) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Sith Sewana",
+    "url": "https://sithsewana.com/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://sithsewana.com/?s={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Structured Data: FAQ (boosts Google rich results & AI answers) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is Sith Sewana?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sith Sewana is a registered residential home for mentally handicapped and differently-abled children located in Tanamalwilla, Sri Lanka. Founded on 8th May 1999 by Mr. Sarath Lanka Perera, it currently cares for over 70 children, providing residential care, medical services, speech therapy, vocational training, education support, and spiritual well-being programs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I donate to Sith Sewana?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can donate to Sith Sewana via bank transfer to Bank of Ceylon, Tanamalwilla branch, Account Number: 5918677, Account Name: Sith Sewana MHCDS, Swift Code: BCEYLKLX. After donating, please email sithsewana@gmail.com with your confirmation. All donations are tax-exempt under the Inland Revenue Act No. 10 of 2006."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Where is Sith Sewana located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sith Sewana is located in Tanamalwilla, Moneragala District, Sri Lanka. You can contact them by phone at +94 776 070 382 or by email at sithsewana@gmail.com."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What programs does Sith Sewana offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Sith Sewana offers six core programs: Residential Care (safe dormitories for boys and girls), Medical Services (knee prosthesis, eye clinics, hearing aids), Speech Therapy, Vocational Training (crafts, envelope making, coconut shell spoon production), Spiritual Well-being (Buddhist temple and multi-faith spaces), and Education Support."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I volunteer or visit Sith Sewana?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "To volunteer or arrange a visit to Sith Sewana, please contact them directly by phone at +94 776 070 382, by WhatsApp at the same number, or by email at sithsewana@gmail.com. You can also follow them on Facebook and Instagram @sithsewana."
+        }
       }
     ]
   }
